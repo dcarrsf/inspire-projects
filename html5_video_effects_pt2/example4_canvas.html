@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 2, Example 4</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        <!-- Add CSS here -->
+    </style>
+</head>
+<body>
+<div id="header-background">
+    <div id="video-column">
+        <div id="video-wrapper" class="fixed">
+            <video id="video-source" loop autoplay width="600" height="337">
+                <source src="video/jellys.mp4" type="video/mp4">
+                <source src="video/jellys.webm" type="video/webm">
+                <source src="video/jellys.ogv" type="video/ogg">
+            </video>
+            <canvas id="video-canvas" width="300" height="168.5"></canvas>
+        </div>
+        <div id="video-controls">
+            <h3>Draw the video to the canvas</h3>
+            <a id="button" class="butt btn-big">Render</a>
+            <hr>
+            <p>*Note: Video cannot be rendered to the canvas in iOS.</p>
+        </div>
+    </div>
+</div>
+<script>
+
+    var video = $("#video-source")[0];
+    var canvas = $("#video-canvas")[0];
+    var context = canvas.getContext("2d");
+
+	// Center the canvas
+	$(canvas).position({
+		my: "center center",
+		at: "center center",
+		of: $("#video-wrapper")
+	});
+		
+    // Update canvas on an interval
+    function draw() {
+        if( video.paused || video.ended ){
+            return;
+        }
+        // Draw video to canvas
+        context.drawImage(video,0,0,video.width/2, video.height/2);
+
+        // Repeat at 30 fps
+        setTimeout(draw, 10);
+    }
+	
+    // Handle button click
+    $('#button').click(function(){
+
+        // Hide the video
+        $(video).css("display", "none");
+
+		// Center the canvas
+		$(canvas).position({
+			my: "center center",
+			at: "center center",
+			of: $("#video-wrapper")
+		});
+        // Start drawing
+        draw();
+    });
+
+</script>
+</body>
+</html>

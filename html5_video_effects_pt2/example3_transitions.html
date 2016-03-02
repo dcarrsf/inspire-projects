@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 2, Example 3</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        .transition {
+            -webkit-transition: 500ms all ease-out;
+            -moz-transition: 500ms all ease-out;
+            -ms-transition: 500ms all ease-out;
+            -o-transition: 500ms all ease-out;
+            transition: 500ms all ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-background">
+        <div id="video-column">
+            <div id="video-wrapper" class="fixed">
+                <div id="video-mask" class="video-mask">
+                    <video id="video-source" class="transition" loop autoplay width="600" height="337">
+                        <source src="video/jellys.mp4" type="video/mp4">
+                        <source src="video/jellys.webm" type="video/webm">
+                        <source src="video/jellys.ogv" type="video/ogg">
+                    </video>
+                </div>
+            </div>
+            <div id="video-controls">
+                <h3>Dynamically animate multiple transformations</h3>
+                <a id="button" class="butt btn-big">Animate</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+        var transformed = false,
+            video = $("#video-source");
+            
+        // Create a function to add the transformations
+        function myTransform( scale, skew, rotate, translate ){
+            video.css({
+                '-webkit-transform': 'skew('+skew+'deg) rotate('+rotate+'deg) scale('+scale+') translateX('+translate+'px)',
+                '-moz-transform': 'skew('+skew+'deg) rotate('+rotate+'deg) scale('+scale+') translateX('+translate+'px)',
+                '-ms-transform': 'skew('+skew+'deg) rotate('+rotate+'deg) scale('+scale+') translateX('+translate+'px)',
+                '-o-transform': 'skew('+skew+'deg) rotate('+rotate+'deg) scale('+scale+') translateX('+translate+'px)',
+                'transform': 'skew('+skew+'deg) rotate('+rotate+'deg) scale('+scale+') translateX('+translate+'px)'
+             });
+        }
+    
+        // Handle button click
+        $('#button').click(function(){
+    
+            transformed = !transformed;
+    
+            var skew = transformed ? 50*Math.random() : 0,
+                scale = transformed ? 1*Math.random() :  1,
+                rotate = transformed ? 25*Math.random() :  0,
+                translate = transformed ? 100*Math.random() : 0;
+    
+            // Call function
+            myTransform( scale, skew, rotate, translate );
+        });
+    </script>
+</body>
+</html>

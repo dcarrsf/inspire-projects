@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 1, Example 3</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        .mask {
+            width: 652px;
+            height: 160px;
+            display: relative;
+            position: absolute;
+            overflow: hidden;
+            top:75px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-background">
+        <div id="video-column">
+            <div id="video-wrapper" class="mask">
+      			<video id="video-source" width="652" height="360" autoplay loop >
+                    <source src="video/tiger.mp4" type="video/mp4">
+                    <source src="video/tiger.webm" type="video/webm">
+                    <source src="video/tiger.ogv" type="video/ogg">
+                </video>
+            </div>
+            <div id="video-controls">
+                <h3>Crop the video with a mask</h3>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Add JavaScript code here...
+    </script>
+</body>
+</html>

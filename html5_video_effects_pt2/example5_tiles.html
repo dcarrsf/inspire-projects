@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 2, Example 5</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        <!-- Add CSS here -->
+    </style>
+</head>
+<body>
+<div id="header-background">
+    <div id="video-column">
+        <div id="video-wrapper" class="fixed">
+            <div id="video-mask" class="video-mask">
+                <video id="video-source" loop autoplay width="600" height="337">
+                    <source src="video/jellys.mp4" type="video/mp4">
+                    <source src="video/jellys.webm" type="video/webm">
+                    <source src="video/jellys.ogv" type="video/ogg">
+                </video>
+                <canvas id="video-copy" width="600" height="337"></canvas>
+            </div>
+            <canvas id="video-output" width="600" height="337"></canvas>
+        </div>
+        <div id="video-controls">
+            <h3>Render the video to tiles</h3>
+            <a id="button" class="butt btn-big">Render</a>
+            <hr>
+            <p>*Note: Video cannot be rendered to the canvas in iOS.</p>
+        </div>
+    </div>
+</div>
+<script>
+
+    var video = $("#video-source")[0],
+        canvasToCopy = $("#video-copy")[0],
+        copy = canvasToCopy.getContext("2d"),
+        canvasToDraw = $("#video-output")[0],
+        draw = canvasToDraw.getContext("2d"),
+        rows = 3,
+        cols = 5,
+        space = 4,
+        tileWidth = Math.round(canvasToCopy.width/cols),
+        tileHeight = Math.round(canvasToCopy.height/rows),
+        tileCenterX = tileWidth/ 2,
+        tileCenterY = tileHeight/ 2,
+        tiles = [];
+
+    // Calculate tile layout
+    function buildTiles(){
+
+        var tileX = 0;
+        var tileY = 0;
+        var row = 0;
+        var col = 0;
+
+        for(var i=0; i<rows; i++){
+            for(var j=0; j<cols; j++){
+
+                // Save a tile object containing the location of the
+                // tile in the original video frame, and the location
+                // it should be drawn to on the output canvas
+                var tile = {
+                    videoX: tileX,
+                    videoY: tileY,
+                    x: (tileCenterX+tileX)+(space*col),
+                    y: (tileCenterY+tileY)+(space*row)
+                };
+                tiles.push(tile);
+                tileX += tileWidth;
+                col++;
+            }
+            row++;
+            col = 0;
+            tileX = 0;
+            tileY += tileHeight;
+        }
+
+        // Center the canvas
+        $(canvasToDraw).position({
+            my: "center center",
+            at: "center center",
+            of: $("#video-wrapper")
+        });
+        $(canvasToCopy).css("display", "none");
+    }
+    buildTiles();
+
+    function drawTiles() {
+        if (video.paused || video.ended) {
+            return;
+        }
+        // Draw the current video frame into the invisible canvas
+        copy.drawImage(video, 0, 0, canvasToCopy.width, canvasToCopy.height);
+
+        // Clear the output canvas
+        draw.clearRect(0, 0, canvasToDraw.width, canvasToDraw.height);
+
+        // Copy tiles from invisible canvas and draw them to the output canvas
+        var len = tiles.length;
+        for(var n=0; n<len; n++){
+            var tile = tiles[n];
+            draw.save();
+            draw.translate(tile.x, tile.y);
+            draw.drawImage(canvasToCopy, tile.videoX, tile.videoY, tileWidth, tileHeight, -tileCenterX, -tileCenterY, tileWidth, tileHeight);
+            draw.restore();
+        }
+        // Draw video on an interval
+        setTimeout(drawTiles, 1000/30);
+    }
+	
+    // Handle button click
+    $("#button").click(function(){
+
+        // Hide the video
+        $(video).css("display", "none");
+
+        // Start drawing
+        drawTiles();
+    });
+
+</script>
+</body>
+</html>

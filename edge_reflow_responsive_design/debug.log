@@ -1,0 +1,18 @@
+[1212/133637:INFO:CONSOLE(82)] "Uncaught TypeError: Cannot call method 'css' of undefined", source: http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/edge.authoring.3.0.0.min.js (82)
+[1212/165743:INFO:CONSOLE(1433)] "TypeError: Cannot read property 'style' of undefined
+    at Object.EdgeDOM.updateOverlay (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js:1295:46)
+    at d.Symbol.seekInTool (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/edge.authoring.3.0.0.min.js:47:259)
+    at about:blank:0:66", source: http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js (1433)
+[1212/165743:INFO:CONSOLE(1433)] "TypeError: Cannot read property 'style' of undefined
+    at Object.EdgeDOM.updateOverlay (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js:1295:46)
+    at d.Symbol.seekInTool (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/edge.authoring.3.0.0.min.js:47:259)
+    at about:blank:0:66", source: http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js (1433)
+[1212/165747:INFO:CONSOLE(1433)] "TypeError: Cannot read property 'style' of undefined
+    at Object.EdgeDOM.updateOverlay (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js:1295:46)
+    at d.Symbol.seekInTool (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/edge.authoring.3.0.0.min.js:47:259)
+    at about:blank:0:66", source: http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js (1433)
+[1212/165747:INFO:CONSOLE(1433)] "TypeError: Cannot read property 'style' of undefined
+    at Object.EdgeDOM.updateOverlay (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js:1295:46)
+    at d.Symbol.seekInTool (http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/edge.authoring.3.0.0.min.js:47:259)
+    at about:blank:0:66", source: http://localhost:54321/_DRIVE_C_EVIRD_/Users/Dan%20Carr/Desktop/responsive_banner/edge_includes/an.canvas.overlay.js (1433)
+[1212/171534:INFO:CONSOLE(82)] "Uncaught TypeError: Cannot call method 'css' of undefined", source: http://localhost:54321/_DRIVE_E_EVIRD_/Work/Adobe/Articles%202012/15.%20Inspire%20-%20Edge%20Reflow%20text%20effects/responsive_banner_completed/edge_includes/edge.authoring.3.0.0.min.js (82)

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>HTML5 Canvas Sample</title>        
+	<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+</head>
+<body>
+	<canvas id="myCanvas" width="500" height="450"></canvas>
+	<script>
+		// 1. Create a stage to draw on using the canvas
+		var stage = new createjs.Stage("myCanvas");
+		
+		// 2. Create a circle shape
+		var circle = new createjs.Shape();
+		circle.graphics.beginFill("blue").drawCircle(250,50,50);
+		
+		// 3. Add the circle to the stage
+		stage.addChild(circle);
+		stage.update();
+	</script>
+</body>
+</html>

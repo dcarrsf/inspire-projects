@@ -1,0 +1,15 @@
+<manifest alg="2" build="50" opt="false">
+  <folder name="css">
+    <file name="site_global.css" crc="4003109849"/>
+    <file name="index.css" crc="3864241882" ref="index"/>
+  </folder>
+  <folder name="scripts">
+    <folder name="1.1">
+      <file name="jquery-1.7.min.js" crc="526788486" ref="index"/>
+      <file name="museutils.js" crc="3870218392" ref="index"/>
+      <file name="pie.js" crc="4067523484" ref="index"/>
+      <file name="pie.htc" crc="119515598" ref="index"/>
+    </folder>
+  </folder>
+  <file name="index.html" crc="244633946" mt="1353883136269"/>
+</manifest>

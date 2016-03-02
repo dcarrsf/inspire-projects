@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>HTML5 Canvas Sample</title>        
+	<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>
+    <script src="http://code.createjs.com/tweenjs-0.4.0.min.js"></script>
+</head>
+<body> 
+	<canvas id="myCanvas" width="700" height="300"></canvas>
+	<script>
+		// Create a stage to draw on using the canvas
+		var stage = new createjs.Stage("myCanvas");
+		
+		// Create circle animations on an interval
+		setInterval(function()
+		{
+			// Add the circle to the stage
+			var target = drawCircle();
+			target.alpha = Math.random()*1;
+			target.x = getRandom(700);
+			target.y = 450;
+			stage.addChild(target);
+			
+			// Tween the circle with TweenJS (sister library to EaselJS)
+			createjs.Tween.get(target).to({y:-100}, Math.max(getRandom(8000), 4000), createjs.Ease.bounceOut).call(onComplete);
+			
+			// Remove the circle when the animation is complete
+			function onComplete() {
+				stage.removeChild(this);
+			}
+		},
+		100);
+
+		// Create a circle with a random size and color
+		function drawCircle(){
+			var size = Math.max(getRandom(100), 25);
+			var colors = ["#fff", "#006DD9"];
+			var circle = new createjs.Shape();
+			circle.graphics.beginRadialGradientFill(colors, [0, 1], -20, -20, 0, 0, 0, 100).drawCircle(0,0,size);
+			return circle;
+		}
+		
+		// Returns a random number
+		function getRandom(n){
+			return Math.floor(Math.random()*n);
+		}
+		
+		// Add a background
+		var bg = new createjs.Shape()
+		bg.graphics.beginLinearGradientFill(["#99B3FF","#006DD9"], [0, 1], 0, 0, 0, 250).drawRect(0,0,700,300);
+		stage.addChild(bg);
+		
+		// Update the view using the Ticker
+		createjs.Ticker.addListener(stage);
+		
+	</script>
+</body>
+</html>

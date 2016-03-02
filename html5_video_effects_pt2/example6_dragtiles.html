@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 2, Example 6</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        <!-- Add CSS here -->
+    </style>
+</head>
+<body>
+<div id="header-background">
+    <div id="video-column">
+        <div id="video-wrapper" class="fixed">
+            <div id="video-mask" class="video-mask">
+                <video id="video-source" loop autoplay width="600" height="337">
+                    <source src="video/jellys.mp4" type="video/mp4">
+                    <source src="video/jellys.webm" type="video/webm">
+                    <source src="video/jellys.ogv" type="video/ogg">
+                </video>
+                <canvas id="video-copy" width="600" height="337"></canvas>
+            </div>
+            <canvas id="video-output" width="600" height="337"></canvas>
+        </div>
+        <div id="video-controls">
+            <h3>Render the video, then drag a tile</h3>
+            <a id="button" class="butt btn-big">Render</a>
+            <hr>
+            <p>*Note: Video cannot be rendered to the canvas in iOS.</p>
+        </div>
+    </div>
+</div>
+<script>
+
+    var video = $("#video-source")[0],
+        canvasToCopy = $("#video-copy")[0],
+        copy = canvasToCopy.getContext("2d"),
+        canvasToDraw = $("#video-output")[0],
+        draw = canvasToDraw.getContext("2d"),
+        rows = 3,
+        cols = 5,
+        space = 4,
+        tileWidth = Math.round(canvasToCopy.width/cols),
+        tileHeight = Math.round(canvasToCopy.height/rows),
+        tileCenterX = tileWidth/ 2,
+        tileCenterY = tileHeight/ 2,
+        tiles = [],
+        dragging = false,
+        dragPoint = {x:0, y:0},
+        selectedTile = null,
+        topIndex = 0;
+
+    // Calculate tile layout
+    function buildTiles(){
+
+        var tileX = 0;
+        var tileY = 0;
+        var row = 0;
+        var col = 0;
+
+        for(var i=0; i<rows; i++){
+            for(var j=0; j<cols; j++){
+
+                // Save a tile object containing the location of the
+                // tile in the original video frame, the start (reset) location
+                // on the output canvas, the current location on the canvas (x and y),
+                // and the zindex and dragPoint for drag operations
+                var tile = {
+                    videoX: tileX,
+                    videoY: tileY,
+                    originX: (tileCenterX+tileX)+(space*col),
+                    originY: (tileCenterY+tileY)+(space*row),
+                    zindex: topIndex,
+                    dragPoint: {x:0, y:0}
+                };
+                tile.x = tile.originX;
+                tile.y = tile.originY;
+                tiles.push(tile);
+                tileX += tileWidth;
+                topIndex++;
+                col++;
+            }
+            row++;
+            col = 0;
+            tileX = 0;
+            tileY += tileHeight;
+        }
+        $(canvasToCopy).css({
+            "display":"none",
+            "left":-1000
+        });
+        // Center the canvas
+        $(canvasToDraw).position({
+            my: "center center",
+            at: "center center",
+            of: $("#video-wrapper")
+        });
+    }
+    buildTiles();
+
+    function drawTiles() {
+        if (!video.duration>0 || video.paused || video.ended) {
+            return;
+        }
+        // Draw the current video frame into the invisible canvas
+        copy.drawImage(video, 0, 0, canvasToCopy.width, canvasToCopy.height);
+
+        // Clear the output canvas
+        draw.clearRect(0, 0, canvasToDraw.width, canvasToDraw.height);
+
+        // Copy tiles from invisible canvas and draw them to the output canvas
+        var len = tiles.length;
+        for(var n=0; n<len; n++){
+            var tile = tiles[n];
+            draw.save();
+            draw.translate(tile.x, tile.y);
+            draw.drawImage(canvasToCopy, tile.videoX, tile.videoY, tileWidth, tileHeight, -tileCenterX, -tileCenterY, tileWidth, tileHeight);
+            draw.restore();
+        }
+        // Draw video on an interval
+        setTimeout(drawTiles, 1000/30);
+    }
+
+    //--------------------
+    // Drag and drop functionality:
+
+    // Start dragging the top-most tile under the mouse point
+    function startDrag(e){
+
+        var tilesUnderPoint = [];
+        var len = tiles.length;
+        var offset = $(canvasToDraw).offset();
+        dragPoint = {x: e.pageX-offset.left, y: e.pageY-offset.top};
+
+        // Save all tiles under mouse point for evaluation
+        for(var n=0; n<len; n++){
+            var tile = tiles[n];
+            if((tile.x-tileCenterX <= dragPoint.x && (tile.x+tileCenterX) >= dragPoint.x) &&
+                    (tile.y-tileCenterY <= dragPoint.y && (tile.y+tileCenterY) >= dragPoint.y)){
+                tilesUnderPoint.push(tile);
+            }
+        }
+        // If one or more tiles are selected, find the tile at the
+        // top zindex, then set the order of the array based on zindex.
+        // Placing the selected tile at the end of the drawing order
+        // ensures that it will be drawn above the other tiles while
+        // dragging.
+        if( tilesUnderPoint.length > 0 ){
+            function sortZIndex(a, b){
+                return a.zindex- b.zindex;
+            }
+            dragging = true;
+            topIndex++;
+            tilesUnderPoint.sort(sortZIndex);
+            selectedTile = tilesUnderPoint.pop();
+            selectedTile.dragPoint = {x:selectedTile.x, y:selectedTile.y};
+            selectedTile.zindex = topIndex;
+            tiles.sort(sortZIndex);
+        }
+    }
+    $(canvasToDraw).on("mousedown", startDrag);
+
+    // Update coordinates while dragging
+    function drag(e){
+        if (dragging) {
+            var offset = $(canvasToDraw).offset();
+            selectedTile.x = selectedTile.dragPoint.x + ((e.pageX-offset.left) - dragPoint.x);
+            selectedTile.y = selectedTile.dragPoint.y + ((e.pageY-offset.top) - dragPoint.y);
+        }
+    }
+    $(canvasToDraw).on("mousemove", drag);
+
+    // Reset variables on drag release
+    function endDrag(e){
+        dragging = false;
+        selectedTile = null;
+    }
+    $(canvasToDraw).on("mouseup", endDrag);
+
+    // Reset tiles to their original location on double-click
+    function resetTiles(e){
+        var len = tiles.length;
+        for(var n=0; n<len; n++){
+            var tile = tiles[n];
+            tile.x = tile.originX;
+            tile.y = tile.originY;
+        }
+    }
+    $(canvasToDraw).on("dblclick ", resetTiles);
+
+    //--------------------
+    // Start on button click:
+
+    // Handle button click
+    $('#button').click(function(){
+
+        // Hide the video
+        $(video).css({
+            "display":"none",
+            "left":-1000
+        });
+        // Start drawing
+        drawTiles();
+    });
+
+</script>
+</body>
+</html>

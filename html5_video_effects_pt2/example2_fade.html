@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>HTML5 Video Effects - Part 2, Example 2</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="src/video-effects.css" rel="stylesheet" type="text/css">
+    <style>
+        .transition {
+            -webkit-transition: 500ms all ease-out;
+            -moz-transition: 500ms all ease-out;
+            -ms-transition: 500ms all ease-out;
+            -o-transition: 500ms all ease-out;
+            transition: 500ms all ease-out;
+        }
+        .fade {
+            opacity:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-background">
+        <div id="video-column">
+            <div id="video-wrapper" class="fixed">
+                <div id="video-mask" class="video-mask">
+                    <video id="video-source" class="transition" loop autoplay width="600" height="337">
+                        <source src="video/jellys.mp4" type="video/mp4">
+                        <source src="video/jellys.webm" type="video/webm">
+                        <source src="video/jellys.ogv" type="video/ogg">
+                    </video>
+                </div>
+            </div>
+            <div id="video-controls">
+                <h3>Fade the video in and out</h3>
+                <a id="button" class="butt btn-big">Fade</a>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <script>
+        var faded = false,
+            video = $("#video-source");
+    
+        // Handle button click
+        $('#button').click(function(){
+    
+            faded = !faded;
+    
+            if( !faded ){
+                video.removeClass("fade");
+            }else{
+                video.addClass("fade");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script>var createjs = window;</script>
+	<script type="text/javascript" src="libs/easeljs-0.5.0.min.js"></script>
+	<script type="text/javascript" src="animation.js"></script>
+	<script>
+	var canvas, stage, banner, bmp, anim;
+	function init(){
+		canvas = document.getElementById("bannerHolder");
+		stage = new Stage(canvas);
+		stage.width = canvas.width;
+		stage.height = canvas.height;
+		
+		// load banner image
+		banner = new Image();
+		banner.src = 'banner.jpg'; 
+		banner.name = 'bannerImage'; 
+		banner.onload = drawCanvas; 	
+	}
+	function drawCanvas(){
+		bmp = new Bitmap(banner);
+		stage.addChild(bmp);
+
+		// load sprite sheet
+		anim = new walkcycle();
+		anim.x = 130;
+		anim.y = 245;
+		stage.addChild(anim)
+		
+		Ticker.setFPS(30);
+		Ticker.addListener(stage);
+	}
+	</script>
+</head>
+<body onLoad="init();">
+	<div class="canvasHolder">
+		<canvas id="bannerHolder" width="1100" height="400"></canvas>
+	</div>
+</body>
+</html>

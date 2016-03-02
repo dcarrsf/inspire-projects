@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>HTML5 Video Sample</title>
+    <style>
+	.videoContainer{
+		width: 720px;
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+    <div class="videoContainer">
+    	<video autoplay="autoplay" controls="controls" preload="auto">
+        
+        	<!-- HTML5 source list: -->
+        	<source src="video/movie.mp4" type="video/mp4">
+            <source src="video/movie.ogv" type="video/ogg">
+            <source src="video/movie.webm" type="video/webm">
+            
+            <!-- Fallback to Flash: -->
+			<object width="720" height="400" type="application/x-shockwave-flash" data="flash-fallback/FlashVideoPlayer.swf">
+            
+                <param name="movie" value="flash-fallback/FlashVideoPlayer.swf" />
+                <param name="flashvars" value="file=../video/movie.mp4" />
+                
+                <!-- Fallback image: -->
+                <img src="videofail.jpg" width="720" height="400" alt="Can't load video."
+                     title="No video playback capabilities" />
+            </object>
+        </video>
+    </div>
+</body>
+</html>
