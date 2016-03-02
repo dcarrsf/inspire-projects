@@ -1,7 +1,7 @@
 # inspire-projects
-HTML5 design projects retired with Adobe Inspire Magazine
+HTML5 design projects with Adobe Inspire Magazine
 
-For those of you who have asked about source files related to my Inspire Magazine articles, I've posted them here for reference. 
+For those of you who have asked about source files related to my Inspire Magazine articles, I've posted them here for reference.
 
 **Projects Include:**
 
